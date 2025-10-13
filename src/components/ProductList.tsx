@@ -2,6 +2,7 @@ import { ProductsType } from '@/types';
 import React from 'react'
 import Categories from './Categories';
 import ProductCard from './ProductCard';
+import Link from 'next/link';
 
 
 // TEMPORARY
@@ -117,9 +118,8 @@ const products: ProductsType = [
 ];
 
 
-type Props = {}
 
-const ProductList = (props: Props) => {
+const ProductList = ({category}:{category:string}) => {
   return (
     <div className='w-full'>
         {/* Categories of product */}
@@ -130,7 +130,8 @@ const ProductList = (props: Props) => {
                 products.map(product=><ProductCard key={product.id} product={product}/>)
             }
         </div>
-
+          {/* Link for see all Products list */}
+          <Link href={ category ? `/products/?category=${category}` : "/products"} className='flex justify-end mt-4 underline text-sm text-gray-500'>View All Products</Link>
     </div>
   )
 }

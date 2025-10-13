@@ -1,7 +1,10 @@
 import ProductList from "@/components/ProductList"
 import Image from "next/image"
 
-const Homepage = () => {
+const Homepage =  async ({searchParams}:{searchParams: Promise<{category:string}>}) => {
+
+  const category = (await searchParams).category
+
   return (
     <div className=''>
       {/* Hero Slider */}
@@ -9,7 +12,7 @@ const Homepage = () => {
         <Image src={'/featured.png'} alt="Featured Product" fill />
       </div>
       {/* Product for Home Page */}
-      <ProductList/>
+      <ProductList category={category}/>
     </div>
   )
 }

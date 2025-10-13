@@ -18,7 +18,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     type: "size" | "color";
     value: string;
   }) => {
-
+    console.log(value)
     setProductTypes((prev)=>({
       ...prev,
       [type]:value,
