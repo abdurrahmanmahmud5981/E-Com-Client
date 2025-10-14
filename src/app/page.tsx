@@ -12,7 +12,7 @@ const Homepage =  async ({searchParams}:{searchParams: Promise<{category:string}
         <Image src={'/featured.png'} alt="Featured Product" fill />
       </div>
       {/* Product for Home Page */}
-      <ProductList category={category}/>
+      <ProductList category={category} params="homePage"/>
     </div>
   )
 }

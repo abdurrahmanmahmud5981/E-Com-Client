@@ -3,6 +3,7 @@ import React from 'react'
 import Categories from './Categories';
 import ProductCard from './ProductCard';
 import Link from 'next/link';
+import Filter from './Filter';
 
 
 // TEMPORARY
@@ -119,13 +120,14 @@ const products: ProductsType = [
 
 
 
-const ProductList = ({category}:{category:string}) => {
+const ProductList = ({category, params}:{category:string,params:"homePage" | "productsPage"}) => {
   return (
-    <div className='w-full'>
+    <div className='w-full py-4'>
         {/* Categories of product */}
         <Categories/>
+        {params === "productsPage" && <Filter/>}
         {/* show product cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12 my-8">
             {
                 products.map(product=><ProductCard key={product.id} product={product}/>)
             }

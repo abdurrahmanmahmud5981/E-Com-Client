@@ -18,7 +18,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     type: "size" | "color";
     value: string;
   }) => {
-    console.log(value)
+ 
     setProductTypes((prev)=>({
       ...prev,
       [type]:value,
@@ -66,7 +66,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
             <div className="flex items-center gap-2">
               {product.colors.map((color) => (
                 <div key={color} className={`cursor-pointer border-1 ${productTypes.color === color ? "border-gray-400" : "border-gray-200"} rounded-full p-[1.5px] flex items-center justify-center`}
-                onClick={e=>handleProductType({type:"color",value:color})}
+                onClick={() =>handleProductType({type:"color",value:color})}
                 >
                   <div
                     className="h-[14px] w-[14px] rounded-full"

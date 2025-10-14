@@ -54,9 +54,9 @@ const categories = [
   },
 ];
 
-type Props = {};
 
-const Categories = (props: Props) => {
+
+const Categories = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
