@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import SearchBar from "./SearchBar";
-import { Bell, HomeIcon, ShoppingCartIcon } from "lucide-react";
+import { Bell, HomeIcon } from "lucide-react";
+import ShoppingCartIcon from "./ShoppingCartIcon";
 
 const Navber = () => {
   return (
@@ -28,7 +29,7 @@ const Navber = () => {
           <HomeIcon className="text-gray-500 cursor-pointer h-4 w-4" />
         </Link>
         <Bell className="text-gray-500 cursor-pointer h-4 w-4" />
-        <ShoppingCartIcon className="text-gray-500 cursor-pointer h-4 w-4" />
+        <ShoppingCartIcon/>
         <Link href="/login" className=" ring-1 px-2 rounded ring-gray-200 cursor-pointer font-medium hover:bg-gray-200">Sign In</Link>
       </div>
     </nav>
