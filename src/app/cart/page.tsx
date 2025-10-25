@@ -1,8 +1,12 @@
 "use client";
 
 import { CartItemsType } from "@/types";
-import { ArrowRight } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight, Trash2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import ShippingForm from "@/components/ShippingForm";
+import PaymentForm from "@/components/PaymentForm";
+import Image from "next/image";
 
 const steps = [
   {
@@ -79,7 +83,7 @@ const cartItems: CartItemsType = [
 const CartPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-
+  const [shippingForm, setShippingForm] = useState(null);
   const activeStep = parseInt(searchParams.get("step") || "1");
 
   return (
@@ -116,13 +120,46 @@ const CartPage = () => {
       <div className="w-full flex flex-col lg:flex-row gap-16">
         {/* steps */}
         <div className="w-full lg:w-7/12 border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
-          1
+          {activeStep === 1 ? (
+            // Cart Sigle Items
+            cartItems.map(item=>(
+              <div className="flex items-center justify-between" key={item.id}>
+                {/* Image and details of item */}
+                <div className="flex gap-8">
+                  {/* Image here */}
+                  <div className="relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden">
+                    <Image src={item.images[item.selectedColor]} alt={item.name} fill className="object-contain"/>
+                  </div>
+                  {/* details here */}
+                  <div className="flex flex-col justify-between">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-medium ">{item.name}</p>
+                      <p className="text-xs text-gray-500">Quantity: {item.quantity}</p>
+                      <p className="text-xs text-gray-500">Size: {item.selectedSize}</p>
+                      <p className="text-xs text-gray-500">Color: {item.selectedColor}</p>
+                    </div>
+                    <p className="font-medium">$ {item.price.toFixed(2)}</p>
+                  </div>
+                </div>
+                {/* Delete button */}
+                <button className="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 transition-all duration-300 text-red-400 flex items-center justify-center cursor-pointer">
+                  <Trash2 size={15}/>
+                </button>
+              </div>
+            ))
+          ) : activeStep === 2 ? (
+            <ShippingForm />
+          ) : activeStep === 3 && shippingForm ? (
+            <PaymentForm />
+          ) : (
+            <p className="text-sm text-gray-500">Please fill in the shipping form to continue.</p>
+          )}
         </div>
         {/* details */}
-        <div className="w-full lg:w-5/12 border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+        <div className="w-full lg:w-5/12 border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-6 h-max">
           <h2 className="font-semibold">Cart Details</h2>
           <div className="flex justify-between gap-4">
-            <p>Subtotal</p>
+            <p className="text-gray-500">Subtotal</p>
             <p>
               $
               {cartItems.reduce(
@@ -131,10 +168,34 @@ const CartPage = () => {
               )}
             </p>
           </div>
-          <button className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex justify-center items-center gap-2 ">
-            Continue
-            <ArrowRight className="w-3 h-3" />
-          </button>
+          <div className="flex justify-between gap-4">
+            <p className="text-gray-500">Discount (10%)</p>
+            <p>$ 10</p>
+          </div>
+          <div className="flex justify-between gap-4">
+            <p className="text-gray-500">Shipping Fee</p>
+            <p>$ 10</p>
+          </div>
+          <hr className="border-gray-200" />
+          <div className="flex justify-between gap-4">
+            <p className="text-gray-800 font-semibold">Total</p>
+            <p>
+              $
+              {cartItems.reduce(
+                (acc, item) => acc + item.price * item.quantity,
+                0
+              )}
+            </p>
+          </div>
+          {activeStep === 1 && (
+            <button
+              onClick={() => router.push("/cart?step=2", { scroll: false })}
+              className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex justify-center items-center gap-2 "
+            >
+              Continue
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          )}
         </div>
       </div>
     </div>
