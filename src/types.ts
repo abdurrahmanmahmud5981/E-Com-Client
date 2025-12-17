@@ -35,7 +35,8 @@ export type ShippingFormInpust = z.infer<typeof shippinFormSchema> ;
 
 
 export const paymentFormSchema = z.object({
-    name: z.string().min(1, "Name is required"),
+    cardHolder: z.string().min(1, "Card Holder is required"),
+    cardNumber: z.string().min(1, "Card Number is required"),
     email: z.email().min(1,"Email is required!"),
     phone: z.string().min(7, "Phone must be between 7 and 10 digits!").max(10,"Phone must be between 7 and 10 digits!").regex(/^\d+$/,"Phone number only contain numbers!"),
     address:z.string().min(1,"Address is required!"),
